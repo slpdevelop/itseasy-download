@@ -5,8 +5,6 @@ if TYPE_CHECKING:
     from itseasy_download.reporter import Reporter
 
 
-
-
 class Executor:
     """Class for executing HTTP download requests with statistics tracking."""
 
@@ -17,7 +15,7 @@ class Executor:
             downloader: An instance of Downloader class
             reporter: An instance of Reporter class
         """
-        self.downloader: "Downloader"= downloader
+        self.downloader: "Downloader" = downloader
         self.reporter: "Reporter" = reporter
         self.statistic: "Statistic" = Statistic()
 
@@ -34,10 +32,10 @@ class Executor:
         self.statistic.clear()
         self.statistic.set_attempts(attempts)
 
-        for i in range(attempts):
+        for _ in range(attempts):
             result: DownloadResult = self.downloader.download(url)
             self.statistic.add_result(result)
-            self.statistic.up_attempt(i + 1)
+            self.statistic.up_attempt()
             self.reporter.report_progress(result, self.statistic)
 
         self.reporter.report_final(self.statistic)
@@ -51,7 +49,6 @@ class Statistic:
         self.result_container: list = []
         self.total_attempts: Optional[int] = None
         self.current_attempt: Optional[int] = None
-
 
     @property
     def avg_duration(self) -> float:
@@ -87,13 +84,9 @@ class Statistic:
         """
         self.total_attempts = attempts
 
-    def up_attempt(self, curr_attempt: int) -> None:
-        """Increment and set the current attempt counter.
-
-        Args:
-            curr_attempt: The new value for current attempt number
-        """
-        self.current_attempt = curr_attempt
+    def up_attempt(self) -> None:
+        """Increment current attempt counter."""
+        self.current_attempt += 1
 
     def clear(self) -> None:
         """Reset all statistics counters and results."""
