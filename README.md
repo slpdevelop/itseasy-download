@@ -13,6 +13,12 @@ requests>=2.31.0
 
 ### Setup Steps
 
+1. **Clone the repository or copy source files to your project directory**
+   ```bash
+   git clone <repository-url>
+   cd itseasy-download
+   ```
+
 2. **Create a virtual environment**
    ```bash
    # Windows (PowerShell)
@@ -28,7 +34,7 @@ requests>=2.31.0
 3. **Activate the virtual environment**
    ```bash
    # Windows (PowerShell)
-   .\venv\Scripts\Activate.psimple
+   .\venv\Scripts\Activate.ps1
    
    # Windows (Command Prompt)
    venv\Scripts\activate.bat
@@ -57,7 +63,12 @@ itseasy_downloader -u <URL> [-a <ATTEMPTS>]
 | Option | Short | Required | Default | Description |
 |--------|-------|----------|---------|-------------|
 | `--url` | `-u` | Yes | - | The URL to download the file from (must start with http:// or https://) |
-| `--attempts` | `-a` | No | 10 | Number of times to retry the download if it fails |
+| `--attempts` | `-a` | No | 10 | Number of times to retry the download if it fails. **Must be between 1 and 100** |
+
+### Limitations
+
+- **Maximum attempts**: 100 (default: 10). The tool will not accept more than 100 retry attempts.
+- **Minimum attempts**: 1. At least one attempt must be made per URL.
 
 ### Examples
 
@@ -65,12 +76,20 @@ itseasy_downloader -u <URL> [-a <ATTEMPTS>]
 # Download from a single URL with default 10 attempts
 itseasy_downloader -u "https://example.com/file.zip"
 
-# Custom number of attempts
+# Custom number of attempts (max: 100)
 itseasy_downloader -u "https://example.com/file.zip" -a 3
 
-# Using local file path
+# Maximum attempts allowed
+itseasy_downloader -u "https://example.com/file.zip" -a 100
+
+# Local file path
 itseasy_downloader -u "E:\downloads\file.zip"
+
+# Example error (attempts > 100)
 ```
+# Output:
+# Error: Invalid number of attempts: 101. Must be between 1 and 100.
+
 
 
 ## Output Statistics
