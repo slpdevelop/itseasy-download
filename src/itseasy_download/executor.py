@@ -63,7 +63,7 @@ class Statistic:
     @property
     def avg_downloaded_speed(self) -> float:
         """Calculate the average download speed across all downloads in MB/s."""
-        sum_duration = sum(a.duration for a in self.result_container)
+        sum_duration: int = sum(a.duration for a in self.result_container)
         if sum_duration == 0:
             return 0.0
         return self.total_size / sum_duration

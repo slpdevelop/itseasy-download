@@ -51,10 +51,10 @@ class Downloader:
 
         response = None
         try:
-            response = requests.get(url, stream=True, timeout=30)
+            response: requests.Response = requests.get(url, stream=True, timeout=30)
             response.raise_for_status()
-            time_end = time.perf_counter()
-            status_code = response.status_code
+            time_end: float = time.perf_counter()
+            status_code: int = response.status_code
 
             content_length: Optional[str] = response.headers.get("Content-Length")
             if content_length is not None:
