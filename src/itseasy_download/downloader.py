@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import time
+from typing import Optional
 import requests
 
 
@@ -53,8 +54,13 @@ class Downloader:
             response = requests.get(url, stream=True, timeout=30)
             response.raise_for_status()
             time_end = time.perf_counter()
-            size = len(response.content)
             status_code = response.status_code
+
+            content_length: Optional[str] = response.headers.get("Content-Length")
+            if content_length is not None:
+                size = int(content_length)
+            else:
+                size: int = len(response.content)
 
             return DownloadResult(
                 time_start=time_start,
