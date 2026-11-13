@@ -5,19 +5,37 @@ import requests
 
 @dataclass
 class DownloadResult:
+    """ Result of a download operation."""
+    # Unix timestamp when download started.
     time_start: float
+    # Unix timestamp when download finished.
     time_end: float
+    # Size of downloaded content in bytes.
     size: int
+    # Status of the download: 'OK' or 'ERROR'.
     status: str
+    # HTTP status code from the response.
     status_code: int
+    
 
     @property
-    def duration(self):
+    def duration(self) -> float:
+        """Calculate the duration of the download in seconds."""
         return self.time_end - self.time_start
 
 
 class Downloader:
+    """Class responsible for downloading files from URLs."""
+
     def download(self, url: str) -> DownloadResult:
+        """Download a file from the given URL.
+        
+        Args:
+            url: The URL to download from
+            
+        Returns:
+            DownloadResult object with download statistics
+        """
         time_start = time.perf_counter()
         
         response = None

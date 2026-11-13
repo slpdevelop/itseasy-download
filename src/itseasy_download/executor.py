@@ -8,27 +8,28 @@ if TYPE_CHECKING:
 
 
 class Executor:
-    """Class for performing HTTP requests."""
+    """Class for executing HTTP download requests with statistics tracking."""
 
     def __init__(self, downloader: "Downloader", reporter: "Reporter"):
-        """Initialize the executor.
+        """Initialize the executor with a downloader and reporter.
 
         Args:
-            url: URL address to download from
-            att: Optional authorization header (e.g., cookie or token)
+            downloader: An instance of Downloader class
+            reporter: An instance of Reporter class
         """
         self.downloader: "Downloader"= downloader
         self.reporter: "Reporter" = reporter
         self.statistic: "Statistic" = Statistic()
 
     def execute(self, url: str, attempts: int):
-        """Execute sequential HTTP requests to the URL.
+        """Execute multiple HTTP download requests to the given URL.
 
         Args:
-            max_requests: Maximum number of requests to execute
+            url: The URL address to download from
+            attempts: Number of times to retry the download
 
         Returns:
-            Dictionary with execution results
+            None
         """
         self.statistic.clear()
         self.statistic.set_attempts(attempts)
@@ -53,30 +54,49 @@ class Statistic:
 
 
     @property
-    def avg_duration(self) -> int:
+    def avg_duration(self) -> float:
+        """Calculate the average duration of all successful downloads in seconds."""
         return sum(a.duration for a in self.result_container) / len(self.result_container)
 
     @property
     def total_size(self) -> float:
+        """Calculate the total size of all downloaded files in MB."""
         return sum(a.size for a in self.result_container) / (1024 * 1024)
 
     @property
     def avg_downloaded_speed(self) -> float:
+        """Calculate the average download speed across all downloads in MB/s."""
         sum_duration = sum(a.duration for a in self.result_container)
         if sum_duration == 0:
             return 0.0
         return self.total_size / sum_duration
 
     def add_result(self, result: "DownloadResult") -> None:
+        """Add a download result to the statistics.
+
+        Args:
+            result: The DownloadResult object to add
+        """
         self.result_container.append(result)
 
     def set_attempts(self, attempts: int) -> None:
+        """Set the total number of download attempts.
+
+        Args:
+            attempts: Number of attempts to be made
+        """
         self.total_attempts = attempts
 
     def up_attempt(self, curr_attempt: int) -> None:
+        """Increment and set the current attempt counter.
+
+        Args:
+            curr_attempt: The new value for current attempt number
+        """
         self.current_attempt = curr_attempt
 
     def clear(self) -> None:
+        """Reset all statistics counters and results."""
         self.result_container = []
         self.total_attempts = 0
         self.current_attempt = 0

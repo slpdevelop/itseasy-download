@@ -7,7 +7,14 @@ from itseasy_download.main import process
 
 
 def validate_url(url):
-    """Validate that the URL starts with http:// or https://"""
+    """Validate that the URL starts with http:// or https:// and is a valid format.
+    
+    Args:
+        url: The URL string to validate
+        
+    Raises:
+        ValueError: If the URL is empty or has invalid format
+    """
     if not url:
         raise ValueError("URL cannot be empty")
     
@@ -17,13 +24,28 @@ def validate_url(url):
     
 
 def validate_attempts(attempts):
-    """Validate that the number of attempts is a positive integer"""
+    """Validate that the number of attempts is a positive integer.
+    
+    Args:
+        attempts: The number of download attempts to make
+        
+    Raises:
+        ValueError: If attempts is not a positive integer
+    """
     if not isinstance(attempts, int) or attempts <= 0:
         raise ValueError(f"Invalid number of attempts: {attempts}")
     
 
 
 def main() -> None:
+    """Parse command-line arguments and start the download process.
+    
+    Reads URL and attempt count from command line, validates them,
+    and initiates the download via process().
+    
+    Returns:
+        None
+    """
     parser = argparse.ArgumentParser(
         description="File loader"
     )

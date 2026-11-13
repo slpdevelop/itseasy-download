@@ -8,13 +8,21 @@ if TYPE_CHECKING:
 
 
 class Reporter:
+    """Class responsible for reporting download progress and final statistics."""
+
     def report_progress(self, result: "DownloadResult", statistic: "Statistic"):
+        """Report the progress of a single download.
+
+        Args:
+            result: The DownloadResult object with current download info
+            statistic: The Statistic object with overall download statistics
+        """
         common = f"Request: {statistic.current_attempt}/{statistic.total_attempts}:"
 
         if result.status == "ERROR":
             print(f"{common} {result.status} | {result.status_code}", end="\r")
             return
-
+        
         size_mb = result.size / (1024 * 1024)
         speed = size_mb / result.duration if result.duration > 0 else 0
 
@@ -30,6 +38,11 @@ class Reporter:
         print(f"{common} {size_str} | {speed:.2f} MB/s")
 
     def report_final(self, statistic: "Statistic"):
+        """Print final statistics after all downloads are completed.
+
+        Args:
+            statistic: The Statistic object with all download results
+        """
         print(
             f"Requests completed: {len(statistic.result_container)}\n"
             f"Average response time: {statistic.avg_duration:.3f} sec\n"
