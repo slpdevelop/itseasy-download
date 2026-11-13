@@ -1,10 +1,8 @@
 from typing import TYPE_CHECKING
 
-
 if TYPE_CHECKING:
     from itseasy_download.executor import Statistic
     from itseasy_download.downloader import DownloadResult
-
 
 
 class Reporter:
@@ -17,25 +15,13 @@ class Reporter:
             result: The DownloadResult object with current download info
             statistic: The Statistic object with overall download statistics
         """
-        common = f"Request: {statistic.current_attempt}/{statistic.total_attempts}:"
+        common: str = f"Request: {statistic.current_attempt}/{statistic.total_attempts}:"
 
         if result.status == "ERROR":
-            print(f"{common} {result.status} | {result.status_code}", end="\r")
+            print(f"{common} {result.status} | {result.status_code}")
             return
-        
-        size_mb = result.size / (1024 * 1024)
-        speed = size_mb / result.duration if result.duration > 0 else 0
 
-        if result.size < 1024:
-            size_str = f"{result.size} bytes"
-        elif result.size < 1024 * 1024:
-            size_str = f"{result.size / 1024:.2f} KB"
-        elif result.size < 1024 * 1024 * 1024:
-            size_str = f"{size_mb:.2f} MB"
-        else:
-            size_str = f"{size_mb / 1024:.2f} GB"
-
-        print(f"{common} {size_str} | {speed:.2f} MB/s")
+        print(f"{common} {result.size_mb:.2f} MB | {result.speed:.2f} MB/s")
 
     def report_final(self, statistic: "Statistic"):
         """Print final statistics after all downloads are completed.

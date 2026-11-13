@@ -58,7 +58,7 @@ class Statistic:
     @property
     def total_size(self) -> float:
         """Calculate the total size of all downloaded files in MB."""
-        return sum(a.size for a in self.result_container) / (1024 * 1024)
+        return sum(a.size_mb for a in self.result_container)
 
     @property
     def avg_downloaded_speed(self) -> float:
