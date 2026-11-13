@@ -24,16 +24,16 @@ def validate_url(url):
 
 
 def validate_attempts(attempts):
-    """Validate that the number of attempts is a positive integer.
+    """Validate that the number of attempts is a positive integer between 1 and 100.
 
     Args:
         attempts: The number of download attempts to make
 
     Raises:
-        ValueError: If attempts is not a positive integer
+        ValueError: If attempts is not a positive integer or exceeds maximum limit
     """
-    if not isinstance(attempts, int) or attempts <= 0:
-        raise ValueError(f"Invalid number of attempts: {attempts}")
+    if not isinstance(attempts, int) or attempts <= 0 or attempts > 100:
+        raise ValueError(f"Invalid number of attempts: {attempts}. Must be between 1 and 100.")
 
 
 def main() -> None:
