@@ -1,4 +1,24 @@
 import argparse
+import re
+
+from main import main
+
+
+def validate_url(url):
+    """Validate that the URL starts with http:// or https://"""
+    if not url:
+        raise ValueError("URL cannot be empty")
+    
+    pattern = r'^(https?)://[^\s/$.?#].[^\s]*$'
+    if not re.match(pattern, url):
+        raise ValueError(f"Invalid URL format: {url}")
+    
+
+def validate_attempts(attempts):
+    """Validate that the number of attempts is a positive integer"""
+    if not isinstance(attempts, int) or attempts <= 0:
+        raise ValueError(f"Invalid number of attempts: {attempts}")
+    
 
 
 def cli() -> None:
@@ -27,9 +47,12 @@ def cli() -> None:
     args = parser.parse_args()
 
     url = args.url
-    attempts = args.attempts
+    validate_url(url)
 
-    # process(args.value)
+    attempts = args.attempts
+    validate_attempts()
+
+    main(url, attempts)
 
 
 if __name__ == "__main__":
