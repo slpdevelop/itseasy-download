@@ -8,7 +8,8 @@ class DownloadResult:
     time_start: float
     time_end: float
     size: int
-    status_code: str
+    status: str
+    status_code: int
 
     @property
     def duration(self):
@@ -30,6 +31,7 @@ class Downloader:
                 time_start=time_start,
                 time_end=time_end,
                 size=size,
+                status="OK",
                 status_code=status_code
             )
         
@@ -39,6 +41,7 @@ class Downloader:
                 time_start=time_start,
                 time_end=time_end,
                 size=0,
+                status="ERROR",
                 status_code=response.status_code
             )
         
