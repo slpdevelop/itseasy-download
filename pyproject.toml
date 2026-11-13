@@ -3,16 +3,17 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "file-downloader"
+name = "itseasy_download"
 version = "0.1.0"
 description = "CLI tool for downloading files"
-requires-python = ">=3.10"
-dependencies = [
-    "aiohttp>=3.9.0",
-]
+requires-python = ">=3.9"
+dependencies = []
 
 [project.scripts]
-downloader = "downloader.cli:main"
+itseasy_downloader = "itseasy_download.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
