@@ -12,11 +12,6 @@ requests>=2.31.0
 ```
 
 ### Setup Steps
-1. **Clone the repository or copy source files to your project directory**
-   ```bash
-   git clone <repository-url>
-   cd itseasy-download
-   ```
 
 2. **Create a virtual environment**
    ```bash
@@ -77,10 +72,6 @@ itseasy_downloader -u "https://example.com/file.zip" -a 3
 itseasy_downloader -u "E:\downloads\file.zip"
 ```
 
-### Exit Codes
-
-- `0` - Success: All downloads completed successfully
-- `1` - Failure: One or more download attempts failed
 
 ## Output Statistics
 
@@ -104,18 +95,10 @@ Average download speed: <SPEED> MB/s
 | **Total downloaded** | Cumulative size of all successfully downloaded files | megabytes (MB) | All values converted to MB, rounded to 2 decimal places |
 | **Average download speed** | Overall data transfer rate across all downloads | megabytes per second (MB/s) | Calculated as: `total_size_MB / total_duration_sec`, rounded to 2 decimal places |
 
-### Size Formatting
-
-Downloaded file sizes are automatically formatted based on magnitude:
-- `< 1KB`: shown in bytes (e.g., `256 bytes`)
-- `< 1MB`: shown in KB (e.g., `12.34 KB`)
-- `< 1GB`: shown in MB (e.g., `12.50 MB`)
-- `>= 1GB`: shown in GB (e.g., `0.12 GB`)
-
 ### Speed Display
 
 Progress updates show:
-- **Size**: As formatted above (bytes, KB, MB, or GB)
+- **Size**: As formatted above ( MB )
 - **Speed**: Always in MB/s with 2 decimal places
 
 Example progress line:
