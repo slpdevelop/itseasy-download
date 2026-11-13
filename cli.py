@@ -3,6 +3,8 @@ import re
 
 from main import main
 
+# "https://drive.google.com/uc?export=download&id=1wD_Z9kNehqTx1uyLBKUb40TChyaO7qzi"
+
 
 def validate_url(url):
     """Validate that the URL starts with http:// or https://"""
@@ -21,7 +23,7 @@ def validate_attempts(attempts):
     
 
 
-def cli() -> None:
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="File loader"
     )
@@ -56,5 +58,5 @@ def cli() -> None:
 
 
 if __name__ == "__main__":
-    # "https://drive.google.com/uc?export=download&id=1wD_Z9kNehqTx1uyLBKUb40TChyaO7qzi"
-    cli()
+    
+    main()
